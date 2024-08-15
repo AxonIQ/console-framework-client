@@ -116,7 +116,7 @@ data class CommandBusInformation(
         val handlerInterceptors: List<InterceptorInformation> = emptyList(),
         val dispatchInterceptors: List<InterceptorInformation> = emptyList(),
         val messageSerializer: SerializerInformation?,
-        val multiTenant: Boolean = false,
+        val multiTenant: Boolean? = false,
 )
 
 data class QueryBusInformation(

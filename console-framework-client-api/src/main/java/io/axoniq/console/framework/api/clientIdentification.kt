@@ -116,6 +116,7 @@ data class CommandBusInformation(
         val handlerInterceptors: List<InterceptorInformation> = emptyList(),
         val dispatchInterceptors: List<InterceptorInformation> = emptyList(),
         val messageSerializer: SerializerInformation?,
+        val multiTenant: Boolean? = false,
 )
 
 data class QueryBusInformation(
@@ -127,6 +128,7 @@ data class QueryBusInformation(
         val dispatchInterceptors: List<InterceptorInformation> = emptyList(),
         val messageSerializer: SerializerInformation?,
         val serializer: SerializerInformation?,
+        val multiTenant: Boolean = false,
 )
 
 data class EventStoreInformation(
@@ -137,6 +139,7 @@ data class EventStoreInformation(
         val eventSerializer: SerializerInformation?,
         val snapshotSerializer: SerializerInformation?,
         val approximateSize: Long? = null,
+        val multiTenant: Boolean = false,
 )
 
 
@@ -149,6 +152,7 @@ data class EventProcessorInformation(
         val streamingInformation: StreamingEventProcessorInformation? = null,
         val trackingInformation: TrackingEventProcessorInformation? = null,
         val pooledStreamingInformation: PooledStreamingEventProcessorInformation? = null,
+        val multiTenant: Boolean = false,
 
         @Deprecated("Deprecated since version 1.6.0 due to new processor structure")
         val messageSourceType: String? = null,

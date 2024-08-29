@@ -73,7 +73,8 @@ class SetupPayloadCreator(
                 commonProcessorInformation = commonProcessorInformation(processor),
                 subscribingProcessorInformation = SubscribingProcessorInformation(
                         processingStrategy = processor.getPropertyType("processingStrategy")
-                )
+                ),
+                multiTenant = processor.javaClass.name == MULTI_TENANT_PROCESSOR_CLASS
         )
     }
 
@@ -258,6 +259,7 @@ class SetupPayloadCreator(
                 dispatchInterceptors = dispatchInterceptors,
                 messageSerializer = messageSerializer,
                 serializer = serializer,
+                multiTenant = bus.javaClass.name == MULTI_TENANT_QUERY_BUS_CLASS,
         )
     }
 
@@ -276,7 +278,8 @@ class SetupPayloadCreator(
                 dispatchInterceptors = dispatchInterceptors,
                 eventSerializer = bus.getPropertyValue<Any>("storageEngine")?.getSerializerType("eventSerializer"),
                 snapshotSerializer = bus.getPropertyValue<Any>("storageEngine")?.getSerializerType("snapshotSerializer"),
-                approximateSize = getApproximateSize(bus)
+                approximateSize = getApproximateSize(bus),
+                multiTenant = bus.javaClass.name == MULTI_TENANT_EVENT_STORE_CLASS,
         )
     }
 
@@ -323,7 +326,8 @@ class SetupPayloadCreator(
                 context = context,
                 handlerInterceptors = handlerInterceptors,
                 dispatchInterceptors = dispatchInterceptors,
-                messageSerializer = serializer
+                messageSerializer = serializer,
+                multiTenant = bus.javaClass.name == MULTI_TENANT_COMMAND_BUS_CLASS,
         )
     }
 
@@ -380,6 +384,13 @@ class SetupPayloadCreator(
             return SerializerInformation(serializer.getPropertyType("delegate"), true)
         }
         return SerializerInformation(serializer::class.java.name, false)
+    }
+
+    companion object {
+        private const val MULTI_TENANT_COMMAND_BUS_CLASS = "org.axonframework.extensions.multitenancy.components.commandhandeling.MultiTenantCommandBus"
+        private const val MULTI_TENANT_QUERY_BUS_CLASS = "org.axonframework.extensions.multitenancy.components.queryhandeling.MultiTenantQueryBus"
+        private const val MULTI_TENANT_EVENT_STORE_CLASS = "org.axonframework.extensions.multitenancy.components.eventstore.MultiTenantEventStore"
+        private const val MULTI_TENANT_PROCESSOR_CLASS = "org.axonframework.extensions.multitenancy.components.eventhandeling.MultiTenantEventProcessor"
     }
 }
 

@@ -30,7 +30,7 @@ class ProcessorReportCreator(
         private val metricsRegistry: ProcessorMetricsRegistry,
 ) {
     companion object {
-        const val MULTI_TENANT_PROCESSOR_CLASS = "org.axonframework.extensions.multitenancy.components.eventhandeling.MultiTenantEventProcessor"
+        private const val MULTI_TENANT_PROCESSOR_CLASS = "org.axonframework.extensions.multitenancy.components.eventhandeling.MultiTenantEventProcessor"
     }
 
     fun createReport() = ProcessorStatusReport(

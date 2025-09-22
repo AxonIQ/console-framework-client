@@ -58,15 +58,6 @@ data class DeadLetterSingleDeleteRequest(
     val messageIdentifier: String,
 )
 
-data class ProcessAllDeadLetterSequencesRequest(
-    val processingGroup: String,
-    val maxMessages: Int = 10
-)
-
-data class DeleteAllDeadLetterSequencesRequest(
-        val processingGroup: String
-)
-
 data class DeadLetterProcessRequest(
     val processingGroup: String,
     val messageIdentifier: String
